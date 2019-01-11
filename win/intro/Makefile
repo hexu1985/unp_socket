@@ -1,8 +1,8 @@
 RM = rm -f
 CXX = g++
 INCLUDE = -I../common
-CXXFLAGS = -Wall -g -O2 ${INCLUDE}
-LIBS = 
+CXXFLAGS = -Wall -g -O2 ${INCLUDE} -D_WIN32_WINNT=0x0600	# _WIN32_WINNT for inet_ntop
+LIBS = -lwsock32 -lws2_32
 VPATH = ../common
 
 PROGS =	daytimetcpcli daytimetcpsrv
