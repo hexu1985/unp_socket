@@ -9,9 +9,7 @@
 #include <arpa/inet.h>
 
 #include "err_quit.hpp"
-
-#define MAXLINE 4096
-#define LISTENQ 1024
+#include "const_def.hpp"
 
 int main(int argc, char *argv[])
 {
