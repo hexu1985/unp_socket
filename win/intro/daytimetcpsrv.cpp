@@ -7,11 +7,7 @@
 #include <ws2tcpip.h>
 
 #include "err_quit.hpp"
-
-#define MAXLINE 4096
-#define LISTENQ 1024
-
-#define WSVERS MAKEWORD(2, 0)
+#include "config.hpp"
 
 int main(int argc, char *argv[])
 {
