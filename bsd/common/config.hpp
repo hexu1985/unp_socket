@@ -9,4 +9,8 @@
 #define LISTENQ 1024
 #endif
 
+#ifndef SERV_PORT 
+#define SERV_PORT 9877
+#endif
+
 #endif
