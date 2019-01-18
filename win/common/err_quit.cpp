@@ -1,4 +1,5 @@
 #include "err_quit.hpp"
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>

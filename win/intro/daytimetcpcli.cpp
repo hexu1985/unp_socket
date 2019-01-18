@@ -1,12 +1,12 @@
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
-#include "err_quit.hpp"
 #include "config.hpp"
+#include "err_quit.hpp"
 
 int main(int argc, char *argv[])
 {
