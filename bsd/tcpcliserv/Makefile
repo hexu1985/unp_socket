@@ -12,7 +12,7 @@ all:	${PROGS}
 tcpcli:	tcpcli.o str_cli.o send_all.o recv_until.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
-tcpserv: tcpserv.o str_echo.o send_all.o err_quit.o
+tcpserv: tcpserv.o str_echo.o send_all.o err_quit.o err_msg.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 clean:

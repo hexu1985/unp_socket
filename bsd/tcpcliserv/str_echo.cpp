@@ -6,7 +6,7 @@
 #include <errno.h>
 
 #include "config.hpp"
-#include "err_quit.hpp"
+#include "err_msg.hpp"
 #include "send_all.hpp"
 
 void
