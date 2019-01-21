@@ -38,6 +38,7 @@ int main(int argc, char **argv)
         err_quit("connect error");
 
     str_cli(stdin, sockfd);		/* do it all */
+    closesocket(sockfd);
 
     WSACleanup();
     exit(0);

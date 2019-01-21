@@ -25,5 +25,6 @@ str_cli(FILE *fp, SOCKET sockfd)
 			err_quit("str_cli: server terminated prematurely");
 
 		fputs(recvline, stdout);
+		fflush(stdout);
 	}
 }
