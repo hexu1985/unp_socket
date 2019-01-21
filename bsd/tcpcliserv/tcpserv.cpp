@@ -21,7 +21,7 @@ main(int argc, char **argv)
 	int					listenfd, connfd;
 	socklen_t			clilen;
 	struct sockaddr_in	cliaddr, servaddr;
-	int					port = SERV_PORT;
+	unsigned short		port = SERV_PORT;
 
     if (argc != 1 && argc != 2)
         err_quit("usage: a.out [listen_port]");

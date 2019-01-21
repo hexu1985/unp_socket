@@ -1,5 +1,5 @@
-#ifndef UNP_CONST_DEF_INC
-#define UNP_CONST_DEF_INC
+#ifndef UNP_CONFIG_INC
+#define UNP_CONFIG_INC
 
 #ifndef MAXLINE
 #define	MAXLINE	4096
