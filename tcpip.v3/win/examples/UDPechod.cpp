@@ -39,6 +39,7 @@ main(int argc, char *argv[])
 	msock = passiveUDP(service);
 
     UDPechod(msock);
+	WSACleanup();
 	return 1;
 }
 

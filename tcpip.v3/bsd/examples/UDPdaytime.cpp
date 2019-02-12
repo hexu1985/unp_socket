@@ -1,17 +1,21 @@
-/* UDPdaytime.cpp - main */
+/* UDPdaytime.c - main */
 
+#include <sys/types.h>
+#include <arpa/inet.h>
+
+#include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <time.h>
-#include <winsock.h>
+#include <errno.h>
 
-#define	BUFSIZE		  64
-#define	WSVERS		MAKEWORD(2, 0)
+#define	BUFSIZE 64
 
 #define	MSG		"what time is it?\n"
 
-SOCKET	connectUDP(const char *, const char *);
-void	errexit(const char *, ...);
+int	connectUDP(const char *host, const char *service);
+int	errexit(const char *format, ...);
 
 /*------------------------------------------------------------------------
  * main - UDP client for TIME service that prints the resulting time
@@ -22,10 +26,8 @@ main(int argc, char *argv[])
 {
 	char	*host = "localhost";	/* host to use if none supplied	*/
 	char	*service = "daytime";	/* default service name		*/
-	SOCKET	s;			/* socket descriptor		*/
-	int	n;			/* recv count			*/
+	int	s, n;			/* socket descriptor, read count*/
 	char	buf[BUFSIZE];		/* buffer for one line of text	*/
-	WSADATA	wsadata;
 
 	switch (argc) {
 	case 1:
@@ -41,20 +43,17 @@ main(int argc, char *argv[])
 		fprintf(stderr, "usage: UDPtime [host [port]]\n");
 		exit(1);
 	}
-	if (WSAStartup(WSVERS, &wsadata))
-		errexit("WSAStartup failed\n");
 
 	s = connectUDP(host, service);
 
-	(void) send(s, MSG, strlen(MSG), 0);
+	(void) write(s, MSG, strlen(MSG));
 
 	/* Read the time */
 
-	n = recv(s, buf, sizeof(buf), 0);
-  	if (n == SOCKET_ERROR)
-		errexit("recv failed: recv() error %d\n", GetLastError());
+	n = read(s, buf, sizeof(buf));
+	if (n < 0)
+		errexit("read failed: %s\n", strerror(errno));
     buf[n] = '\0';	/* ensure null-termination	*/
     (void) fputs(buf, stdout);
-	WSACleanup();
-	return 0;	/* exit */
+	exit(0);
 }

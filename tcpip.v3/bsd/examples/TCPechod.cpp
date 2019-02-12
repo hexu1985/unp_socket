@@ -1,18 +1,28 @@
-/* TCPechod.cpp - main, TCPechod */
+/* TCPechod.c - main, TCPechod */
 
+#define	_USE_BSD
+#include <sys/types.h>
+#include <sys/signal.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <sys/wait.h>
+#include <sys/errno.h>
+#include <netinet/in.h>
+
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
-#include <winsock.h>
+#include <string.h>
+#include <errno.h>
 #include <thread>
 
-#define	QLEN		   5	/* maximum connection queue length	*/
+#define	QLEN		  32	/* maximum connection queue length	*/
 #define	BUFSIZE		4096
-#define	WSVERS		MAKEWORD(2, 0)
 
-SOCKET	msock, ssock;		/* master & slave server sockets	*/
-
-int	TCPechod(SOCKET);
-void	errexit(const char *, ...);
-SOCKET	passiveTCP(const char *, int);
+int	TCPechod(int fd);
+int	errexit(const char *format, ...);
+int	passiveTCP(const char *service, int qlen);
 
 /*------------------------------------------------------------------------
  * main - Concurrent TCP server for ECHO service
@@ -23,8 +33,9 @@ main(int argc, char *argv[])
 {
 	char	*service = "echo";	/* service name or port number	*/
 	struct	sockaddr_in fsin;	/* the address of a client	*/
-	int	alen;			/* length of client's address	*/
-	WSADATA	wsadata;
+	unsigned int	alen;		/* length of client's address	*/
+	int	msock;			/* master server socket		*/
+	int	ssock;			/* slave server socket		*/
 
 	switch (argc) {
 	case	1:
@@ -36,18 +47,18 @@ main(int argc, char *argv[])
 		errexit("usage: TCPechod [port]\n");
 	}
 
-	if (WSAStartup(WSVERS, &wsadata) != 0)
-		errexit("WSAStartup failed\n");
 	msock = passiveTCP(service, QLEN);
 
 	while (1) {
 		alen = sizeof(fsin);
 		ssock = accept(msock, (struct sockaddr *)&fsin, &alen);
-		if (ssock == INVALID_SOCKET)
-			errexit("accept: error number\n", GetLastError());
+		if (ssock < 0) {
+			if (errno == EINTR)
+				continue;
+			errexit("accept: %s\n", strerror(errno));
+		}
         std::thread(TCPechod, ssock).detach();
 	}
-	return 1;	/* not reached */
 }
 
 /*------------------------------------------------------------------------
@@ -55,23 +66,17 @@ main(int argc, char *argv[])
  *------------------------------------------------------------------------
  */
 int
-TCPechod(SOCKET fd)
+TCPechod(int fd)
 {
-	char	buf[BUFSIZE];
+	char	buf[BUFSIZ];
 	int	cc;
 
-	cc = recv(fd, buf, sizeof buf, 0);
-	while (cc != SOCKET_ERROR && cc > 0) {
-		if (send(fd, buf, cc, 0) == SOCKET_ERROR) {
-			fprintf(stderr, "echo send error: %d\n",
-				GetLastError());
-			break;
-		}
-		cc = recv(fd, buf, sizeof buf, 0);
+	while (cc = read(fd, buf, sizeof buf)) {
+		if (cc < 0)
+			errexit("echo read: %s\n", strerror(errno));
+		if (write(fd, buf, cc) < 0)
+			errexit("echo write: %s\n", strerror(errno));
 	}
-	if (cc == SOCKET_ERROR)
-		fprintf(stderr, "echo recv error: %d\n", GetLastError());
-	closesocket(fd);
 	return 0;
 }
 
