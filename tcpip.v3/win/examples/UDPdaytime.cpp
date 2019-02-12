@@ -21,7 +21,7 @@ int
 main(int argc, char *argv[])
 {
 	char	*host = "localhost";	/* host to use if none supplied	*/
-	char	*service = "time";	/* default service name		*/
+	char	*service = "daytime";	/* default service name		*/
 	time_t	now;			/* 32-bit integer to hold time	*/
 	SOCKET	s;			/* socket descriptor		*/
 	int	n;			/* recv count			*/

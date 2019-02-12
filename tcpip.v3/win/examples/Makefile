@@ -7,7 +7,8 @@ VPATH =
 
 PROGS =	TCPecho TCPdaytime TCPtecho UDPecho UDPtime \
 		TCPdaytimed TCPechod TCPmechod UDPtimed daytimed \
-		superd UDPechod UDPdaytime UDPdaytimed
+		superd UDPechod UDPdaytime UDPdaytimed \
+		TCPtime TCPtimed
 
 all:	${PROGS}
 
@@ -36,6 +37,12 @@ TCPechod: TCPechod.o passiveTCP.o passivesock.o errexit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 TCPmechod: TCPmechod.o passiveTCP.o passivesock.o errexit.o
+		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
+
+TCPtime: TCPtime.o connectTCP.o connectsock.o errexit.o
+		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
+
+TCPtimed: TCPtimed.o passiveTCP.o passivesock.o errexit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 UDPechod: UDPechod.o passiveUDP.o passivesock.o errexit.o
