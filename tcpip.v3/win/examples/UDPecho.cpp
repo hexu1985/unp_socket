@@ -61,7 +61,7 @@ UDPecho(const char *host, const char *service)
 		nchars = strlen(buf);
 		(void) send(s, buf, nchars, 0);
 
-		if (recv(s, buf, sizeof(buf), 0) < 0)
+		if (recv(s, buf, nchars, 0) < 0)
 			errexit("recv failed: error %d\n",
 					GetLastError());
 		fputs(buf, stdout);
