@@ -3,7 +3,6 @@
 #include <stdio.h>
 
 #include "config.hpp"
-#include "err_msg.hpp"
 #include "send_all.hpp"
 
 void
@@ -16,5 +15,5 @@ str_echo(SOCKET sockfd)
 		send_all(sockfd, buf, n);
 
 	if (n == SOCKET_ERROR)
-        err_msg("str_echo: read error");
+        printf("str_echo: read error\n");
 }
