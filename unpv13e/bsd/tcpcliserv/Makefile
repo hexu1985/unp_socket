@@ -5,7 +5,7 @@ CXXFLAGS = -Wall -g -O2 ${INCLUDE} -std=c++11
 LIBS = -lpthread
 VPATH = ../common
 
-PROGS =	tcpcli tcpserv tcpserv_reuseaddr tcpserv_select tcpserv_poll tcpcli_select
+PROGS =	tcpcli tcpserv tcpserv_reuseaddr tcpserv_select tcpserv_poll tcpcli_select tcpserv_fork 
 
 all:	${PROGS}
 
@@ -25,6 +25,9 @@ tcpserv_poll: tcpserv_poll.o send_all.o err_quit.o err_msg.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 tcpcli_select: tcpcli.o str_cli_select.o send_all.o recv_until.o err_quit.o
+		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
+
+tcpserv_fork: tcpserv_fork.o str_echo.o send_all.o err_quit.o err_msg.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 clean:
