@@ -12,22 +12,22 @@ all:	${PROGS}
 tcpcli:	tcpcli.o str_cli.o send_all.o recv_until.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
-tcpserv: tcpserv.o str_echo.o send_all.o err_quit.o err_msg.o
+tcpserv: tcpserv.o str_echo.o send_all.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
-tcpserv_reuseaddr: tcpserv_reuseaddr.o str_echo.o send_all.o err_quit.o err_msg.o
+tcpserv_reuseaddr: tcpserv_reuseaddr.o str_echo.o send_all.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
-tcpserv_select: tcpserv_select.o send_all.o err_quit.o err_msg.o
+tcpserv_select: tcpserv_select.o send_all.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
-tcpserv_poll: tcpserv_poll.o send_all.o err_quit.o err_msg.o
+tcpserv_poll: tcpserv_poll.o send_all.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 tcpcli_select: tcpcli.o str_cli_select.o send_all.o recv_until.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
-tcpserv_fork: tcpserv_fork.o str_echo.o send_all.o err_quit.o err_msg.o
+tcpserv_fork: tcpserv_fork.o str_echo.o send_all.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 clean:

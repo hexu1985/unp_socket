@@ -3,10 +3,10 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
+#include <stdio.h>
 #include <errno.h>
 
 #include "config.hpp"
-#include "err_msg.hpp"
 #include "send_all.hpp"
 
 void
@@ -22,5 +22,5 @@ again:
 	if (n < 0 && errno == EINTR)
 		goto again;
 	else if (n < 0)
-        err_msg("str_echo: read error");
+		printf("str_echo: read error\n");
 }

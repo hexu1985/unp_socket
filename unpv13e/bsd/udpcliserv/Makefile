@@ -12,7 +12,7 @@ all:	${PROGS}
 udpcli:	udpcli.o dg_cli.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
-udpserv: udpserv.o dg_echo.o send_all.o err_quit.o err_msg.o
+udpserv: udpserv.o dg_echo.o send_all.o err_quit.o
 		${CXX} ${CXXFLAGS} -o $@ $^ ${LIBS}
 
 clean:
