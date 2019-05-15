@@ -5,6 +5,5 @@
 #include <sys/socket.h>
 
 int tcp_listen(const char *, const char *, socklen_t *);
-int Tcp_listen(const char *, const char *, socklen_t *);
 
 #endif
