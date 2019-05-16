@@ -1,5 +1,4 @@
 RM = rm -f
-RM = rm -f
 CXX = g++
 INCLUDE = -I../common
 CXXFLAGS = -Wall -g -O2 ${INCLUDE} -std=c++11
